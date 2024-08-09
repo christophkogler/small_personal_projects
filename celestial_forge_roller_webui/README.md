@@ -1,17 +1,17 @@
 THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY TO BE.
 
-# small_personal_projects\celestial_forge_stuff
+# small_personal_projects\celestial_forge_roller_webui
 ## Description
-This directory contains files and subdirectories related to the Celestial Forge project, a personal endeavor that delves into celestial mechanics and astronomy. It includes a comprehensive list of items that can be acquired or purchased in the Celestial Forge universe, a vast repository of technological advancements and innovations, as well as the necessary dependencies for the project's development. Additionally, it features a web-based interface for the Celestial Forge, allowing users to roll powers from a CSV file, filter by domain, and weight rolls based on cost, with features for loading, saving, and displaying roll history.
+This directory contains the files and subdirectories for the Celestial Forge Roller Web UI, a small-scale text-based game and web interface for the Celestial Forge universe. It includes a CSV file containing a list of items that can be purchased or acquired, a requirements file outlining the necessary dependencies for the project, and a Python script for the web-based interface. The web interface allows users to roll powers from a CSV file, filter by domain, and weight rolls based on cost, with features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
 
 # CelestialForgeV3-ALL-fixed.csv
 ## Description
-This file contains a list of items that can be purchased or acquired in the Celestial Forge universe, a vast repository of technological advancements and innovations. Each item is categorized by its type, cost, source, and domain, with a brief description of its capabilities and potential uses. The items range from simple assistants and companions to advanced technologies and miniaturized machines, offering a wide range of possibilities for exploration and development.
+This file contains a list of items that can be purchased or acquired in the Celestial Forge universe, a vast repository of technological advancements and innovations. Each item is categorized by its type, cost, source, and description, providing a glimpse into the possibilities of what can be achieved with these technological wonders. From AI companions to miniaturized machines, these items offer a glimpse into the potential of the universe, from the mundane to the extraordinary.
 
 # requirements.txt
 ## Description:
-This file contains a list of dependencies required for the Celestial Forge project, a personal project that involves celestial mechanics and astronomy. It outlines the necessary libraries and tools needed to run the project, ensuring that all necessary components are readily available for development and execution.
+This file outlines the dependencies required for the Celestial Forge Roller Web UI project, a small personal project that utilizes the Gradio library for its user interface. It ensures that the necessary packages are installed and available for the project's successful execution.
 
 # webui.py
 ## Description
-This Python script is a web-based interface for the Celestial Forge, a fantasy world-building tool. It allows users to roll powers from a CSV file, with the option to filter by domain and weight the rolls based on cost. The interface includes features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
+This is a web-based interface for the Celestial Forge, a small-scale, text-based game. It allows users to roll powers from a CSV file, with the option to filter by domain and weight the rolls based on cost. The interface includes features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
