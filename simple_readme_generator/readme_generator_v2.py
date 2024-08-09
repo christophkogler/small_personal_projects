@@ -116,7 +116,7 @@ def process_directory_tree(dir_path, base_dir):
 	readme_path = os.path.join(dir_path, 'README.md')
 	with open(readme_path, 'w') as readme_file:
 		directory_write_readme = "THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY TO BE.\n\n"+directory_readme
-		if (get_rel_dir_path(dir_path, base_dir) == get_rel_dir_path(base_dir, base_dir)):
+		if (get_rel_dir_path(dir_path, dir_path) == "simple_readme_generator"):
 			directory_write_readme = "## Requirements\n- `pip install requests`\n- An OpenAI API-compatible text generation backend at localhost:5000 (I recommend [this one](https://github.com/oobabooga/text-generation-webui) ).\n- A Llama 3/3.1 model.\n\n" + directory_readme
 		readme_file.write(directory_write_readme + "\n\n" + "\n\n".join(clean_summaries))
     

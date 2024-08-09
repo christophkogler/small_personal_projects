@@ -1,4 +1,4 @@
-Oobabooga API documentation
+Oobabooga API documentation (INCOMPLETE!)
 
 	model
 		string - Required
@@ -95,7 +95,8 @@ Oobabooga API documentation
 		samplers
 	
 	"sampler_priority": ["string",],
-	
+		sampler application order
+
 	"preset": "string",
 		OobaBooga preset to load
 		
@@ -105,7 +106,7 @@ Oobabooga API documentation
 	"dynatemp_exponent": 1,
 	"smoothing_factor": 0,
 	"smoothing_curve": 1,
-		dynamic temperature to prevent 'boring' text
+		dynamic temperature (to prevent 'boring' text?)
 		
 	"repetition_penalty": 1,
 	"repetition_penalty_range": 1024,
@@ -121,11 +122,14 @@ Oobabooga API documentation
 	"mirostat_mode": 0,
 	"mirostat_tau": 5,
 	"mirostat_eta": 0.1,
-		Llama sampler, attempting to keep a certain perplexity
+		Llama-only sampler, attempts to keep a certain perplexity
 		
 	"temperature_last": false,
+		temperature after samplers
+
 	"do_sample": true,
 	"seed": -1,
+		inference seed
 	
 	"encoder_repetition_penalty": 1,
 	"no_repeat_ngram_size": 0,

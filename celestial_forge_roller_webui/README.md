@@ -2,7 +2,7 @@ THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY 
 
 # small_personal_projects\celestial_forge_roller_webui
 ## Description
-This directory contains the files and subdirectories for the Celestial Forge Roller Web UI, a small-scale text-based game and web interface for the Celestial Forge universe. It includes a CSV file containing a list of items that can be purchased or acquired, a requirements file outlining the necessary dependencies for the project, and a Python script for the web-based interface. The web interface allows users to roll powers from a CSV file, filter by domain, and weight rolls based on cost, with features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
+The Celestial Forge Roller Web UI directory is a small personal project that utilizes the Gradio library to create an interactive web interface for celestial body simulations. It includes a list of items that can be purchased or acquired in the Celestial Forge universe, a vast repository of technological advancements and innovations, as well as the necessary dependencies for the project's development and deployment. The web-based interface allows users to roll powers from a CSV file, filter by domain, and weight the rolls based on cost, with features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
 
 # CelestialForgeV3-ALL-fixed.csv
 ## Description
@@ -10,7 +10,7 @@ This file contains a list of items that can be purchased or acquired in the Cele
 
 # requirements.txt
 ## Description:
-This file outlines the dependencies required for the Celestial Forge Roller Web UI project, a small personal project that utilizes the Gradio library for its user interface. It ensures that the necessary packages are installed and available for the project's successful execution.
+This file outlines the dependencies required for the Celestial Forge Roller Web UI project, a small personal project that utilizes the Gradio library to create an interactive web interface for celestial body simulations. It ensures that the necessary packages are installed and configured for a seamless development and deployment experience.
 
 # webui.py
 ## Description
