@@ -75,13 +75,14 @@ def generate_readme_for_directory(summaries, current_dir_path, base_directory_pa
 	return readme_prep_string + response
 
 def process_directory_tree(dir_path, base_dir):
+	
 	diritems = os.listdir(dir_path)
 	#filter additional folder/file names as necessary for your environment.
-	#ignore readmes (cheating!), .git folder, pycache(s)
+	#ignore readmes for now, .git folder, pycache(s)
 	blacklist = ['readme.txt', 'readme.md', '.git', '__pycache__'] 
 	diritems = [item for item in diritems if item.lower() not in blacklist] #filter for common things we DONT want (or can't process)
 	diritems = [item for item in diritems if item not in sys.argv[1:]] #accept command line arguments to filter arbitrary additional amount of directory/file names from processing.
-
+	
 	if not diritems:
 		return f"#{get_rel_dir_path(dir_path, base_dir)}\n##Description\nThis folder is empty."
 		
@@ -99,26 +100,38 @@ def process_directory_tree(dir_path, base_dir):
 	
 	print(f"Processing files in {get_rel_dir_path(dir_path, base_dir)}...")
 	
-	file_summaries = []
-	files = [f for f in diritems if os.path.isfile(os.path.join(dir_path, f))]
-	for file in files:
-		print(f"Processing file {file}...")
-		file_path = os.path.join(dir_path, file)
-		relative_path = get_rel_dir_path(file_path, base_dir)
-		result = generate_readme_for_file(file_path, directory_path)
-		file_summaries.append(f"{relative_path}:\n{result}")
-		clean_summaries.append(result)
+	directory_readme = ""
+	readme_path_lower = os.path.join(dir_path, 'readme.md')
+	readme_path_upper = os.path.join(dir_path, 'README.md')
+	# if there is already a readme in the directory, just use it. Possibly some wasted effort in lower directories, but human written readme > ai slop almost all the time
+	if os.path.isfile(readme_path_lower): # if there is a readme already in the file
+		with open(readme_path_lower, 'r', encoding='utf-8') as dir_file:
+			directory_readme = dir_file.read()
+	elif os.path.isfile(readme_path_upper): # uppercase README
+		with open(readme_path_upper, 'r', encoding='utf-8') as dir_file:
+			directory_readme = dir_file.read()
+	else: # if there is not a readme in the directory, summarize any files, make a readme, and save it.
+		
+		file_summaries = []
+		files = [f for f in diritems if os.path.isfile(os.path.join(dir_path, f))]
+		for file in files:
+			print(f"Processing file {file}...")
+			file_path = os.path.join(dir_path, file)
+			relative_path = get_rel_dir_path(file_path, base_dir)
+			result = generate_readme_for_file(file_path, directory_path)
+			file_summaries.append(f"{relative_path}:\n{result}")
+			clean_summaries.append(result)
 
-	relativepath_summaries = file_summaries + dir_summaries
+		relativepath_summaries = file_summaries + dir_summaries
 	
-	directory_readme = generate_readme_for_directory(relativepath_summaries, dir_path, base_dir)
-
-	readme_path = os.path.join(dir_path, 'README.md')
-	with open(readme_path, 'w') as readme_file:
-		directory_write_readme = "THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY TO BE.\n\n"+directory_readme
-		if (get_rel_dir_path(dir_path, dir_path) == "simple_readme_generator"):
-			directory_write_readme = "## Requirements\n- `pip install requests`\n- An OpenAI API-compatible text generation backend at localhost:5000 (I recommend [this one](https://github.com/oobabooga/text-generation-webui) ).\n- A Llama 3/3.1 model.\n\n" + directory_readme
-		readme_file.write(directory_write_readme + "\n\n" + "\n\n".join(clean_summaries))
+		directory_readme = ""
+		readme_path = os.path.join(dir_path, 'README.md')
+		directory_readme = generate_readme_for_directory(relativepath_summaries, dir_path, base_dir)
+		with open(readme_path, 'w') as readme_file:
+			directory_write_readme = "THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY TO BE.\n\n"+directory_readme
+			if (get_rel_dir_path(dir_path, dir_path) == "simple_readme_generator"):
+				directory_write_readme = "## Requirements\n- `pip install requests`\n- An OpenAI API-compatible text generation backend at localhost:5000 (I recommend [this one](https://github.com/oobabooga/text-generation-webui) ).\n- A Llama 3/3.1 model.\n\n" + directory_readme
+			readme_file.write(directory_write_readme + "\n\n" + "\n\n".join(clean_summaries))
     
 	return directory_readme
 

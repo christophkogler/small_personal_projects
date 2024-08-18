@@ -1,4 +1,4 @@
-#A small gradio webui application to provide an interface for rolling powers from the Celestial Forge.
+#A small gradio webui application to provide an interface for rolling powers from the Celestial Forge document.
 
 import csv
 import random
