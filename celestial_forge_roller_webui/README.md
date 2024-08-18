@@ -2,16 +2,16 @@ THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY 
 
 # small_personal_projects\celestial_forge_roller_webui
 ## Description
-The Celestial Forge Roller Web UI directory is a small personal project that utilizes the Gradio library to create an interactive web interface for celestial body simulations. It includes a list of items that can be purchased or acquired in the Celestial Forge universe, a vast repository of technological advancements and innovations, as well as the necessary dependencies for the project's development and deployment. The web-based interface allows users to roll powers from a CSV file, filter by domain, and weight the rolls based on cost, with features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
+This directory contains a web application for rolling powers from a Celestial Forge document. It includes a CSV file listing various abilities and items, a list of project dependencies, and a Python script for the web application. The application allows users to roll powers based on selected domains and point costs, with features for undoing rolls, saving and loading roll history, and calculating points based on word count and ratio.
 
 # CelestialForgeV3-ALL-fixed.csv
 ## Description
-This file contains a list of items that can be purchased or acquired in the Celestial Forge universe, a vast repository of technological advancements and innovations. Each item is categorized by its type, cost, source, and description, providing a glimpse into the possibilities of what can be achieved with these technological wonders. From AI companions to miniaturized machines, these items offer a glimpse into the potential of the universe, from the mundane to the extraordinary.
+This file contains a list of 38 items, each representing a unique ability or item that can be acquired in the Celestial Forge system. The items are categorized into three types: Assistants, Quality Size, and others. The file provides a concise description of each item, including its cost, source, and domain. The items range from simple assistants like servoskulls and companion AIs to more complex abilities like nanite control and miniaturization.
 
 # requirements.txt
-## Description:
-This file outlines the dependencies required for the Celestial Forge Roller Web UI project, a small personal project that utilizes the Gradio library to create an interactive web interface for celestial body simulations. It ensures that the necessary packages are installed and configured for a seamless development and deployment experience.
+## Description
+This file contains a list of dependencies required for the Celestial Forge Roller Web UI project.
 
 # webui.py
 ## Description
-This is a web-based interface for the Celestial Forge, a small-scale, text-based game. It allows users to roll powers from a CSV file, with the option to filter by domain and weight the rolls based on cost. The interface includes features for loading and saving previous rolls, undoing the last roll, and displaying the roll history.
+A Gradio web application for rolling powers from a Celestial Forge document. The application loads a CSV file, allowing users to roll powers based on selected domains and point costs. It also includes features for undoing rolls, saving and loading roll history, and calculating points based on word count and ratio.
