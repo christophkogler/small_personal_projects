@@ -1,2 +1,5 @@
 __pycache__
 not_functional
+venv
+LangChain_scripts
+run_falcon_mamba_7b

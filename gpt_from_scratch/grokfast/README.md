@@ -1,17 +1,34 @@
 THIS FILE IS MACHINE GENERATED. IT IS NOT GAURANTEED TO BE CORRECT, ONLY LIKELY TO BE.
 
 # small_personal_projects\gpt_from_scratch\grokfast
-## Description
-This directory contains a Python script, grokfast.py, which provides two functions for gradient filtering: `gradfilter_ma` and `gradfilter_ema`. These functions are designed to modify gradients of PyTorch models during training, allowing for various gradient filtering techniques such as gradient clipping, normalization, and masking.
+## Description:
+## This directory contains a Python module for gradient filtering in PyTorch models.
+
+## The module provides two functions:
+##   - gradfilter_ma: applies a moving average filter to gradients
+##   - gradfilter_ema: applies an exponential moving average filter to gradients
+
+## These functions can be used to implement various gradient filtering techniques during model training.
 
 # grokfast.py
-## Description
-This script contains two functions for gradient filtering: `gradfilter_ma` and `gradfilter_ema`. These functions are designed to modify gradients of PyTorch models during training.
+## Description:
+## This module provides two functions for gradient filtering: gradfilter_ma and gradfilter_ema.
+## They are designed to modify gradients of a PyTorch model's parameters during training.
+## The functions can be used to implement various gradient filtering techniques, such as moving average and exponential moving average.
 
-### gradfilter_ma
-This function implements a moving average filter on gradients. It takes a PyTorch module `m`, an optional dictionary of gradients `grads`, a window size `window_size`, a learning rate `lamb`, a filter type (`mean` or `sum`), and a boolean `warmup` as arguments. It returns a dictionary of gradients.
+## gradfilter_ma:
+##   - Applies a moving average filter to the gradients of a model's parameters.
+##   - The filter is applied after a specified number of iterations (window_size) and with a specified learning rate (lamb).
+##   - The filter type can be either 'mean' or 'sum'.
 
-### gradfilter_ema
-This function implements an exponential moving average filter on gradients. It takes a PyTorch module `m`, an optional dictionary of gradients `grads`, an alpha value `alpha`, and a learning rate `lamb` as arguments. It returns a dictionary of gradients.
+## gradfilter_ema:
+##   - Applies an exponential moving average filter to the gradients of a model's parameters.
+##   - The filter is applied with a specified decay rate (alpha) and learning rate (lamb).
 
-Both functions are designed to be used during training to modify the gradients of a PyTorch model. They can be used to implement various gradient filtering techniques, such as gradient clipping, gradient normalization, or gradient masking.
+## Usage:
+##   - Import the module and call the desired function, passing in the model and any optional arguments.
+##   - The functions return a dictionary of filtered gradients.
+
+## Note:
+##   - The functions modify the gradients in-place, so no additional memory is allocated.
+##   - The functions can be used in conjunction with other gradient filtering techniques or optimization algorithms.
