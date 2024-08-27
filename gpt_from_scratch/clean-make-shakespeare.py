@@ -6,6 +6,7 @@
 	# a feedforward layer with high inner dimenstionality
 # this model is trained on the tiny-shakespeare dataset
 # for fun, implements grokfast, which attempts to amplify low frequency gradients. most likely not effective on such a small model; maybe on a larger scale it could be helpful.
+# also implements a tensorboard tracker
 
 import os
 import torch

@@ -47,15 +47,19 @@ def generate_readme_for_file(filepath, base_directory_path = None):
 	file_name = get_rel_dir_path(filepath, filepath)
 	readme_prep_string = f"# {file_name}\n## Description"
 	#print(file_name)
-	with open(filepath, 'r', encoding="utf8") as file:
-		content = file.read()
+	try:
+		with open(filepath, 'r', encoding="utf-8") as file:
+			content = file.read()
+	except Exception as e:
+		content = "This file is not decodable via utf-8."
+		pass # file isnt readable
+	#Llama 3.1 format convention:
+	if not content: # if file is totally empty
+		content = "This file is empty."
 	if len(content) >= 20000:
 		content = content[0:10000] + "Some text omitted to fit context length." + content[-10000:]
-	#Llama 3.1 format convention:
-	if not content:
-		content = "This file is empty."
 	system_prompt = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n<|eot_id|>"
-	user_input = f"<|start_header_id|>user<|end_header_id|>\nWrite a concise description for the following file (located at {relative_path}). Avoid simply repeating the files contents. \n\n{content}\n<|eot_id|>"
+	user_input = f"<|start_header_id|>user<|end_header_id|>\nWrite a concise description for the following file (located at {relative_path}). Avoid simply repeating the file contents. \n\n{content}\n<|eot_id|>"
 	assistant_prep = f"<|start_header_id|>assistant<|end_header_id|>\n{readme_prep_string}"
 	prompt = system_prompt + user_input + assistant_prep
 	response = api_call(prompt)
@@ -94,7 +98,7 @@ def process_directory_tree(dir_path, base_dir = None):
 	diritems = os.listdir(dir_path)
 	#filter additional folder/file names as necessary for your environment.
 	#ignore readmes for now, .git folder, pycache(s)
-	blacklist = ['readme.txt', 'readme.md', '.git', '__pycache__'] 
+	blacklist = ['readme.txt', 'readme.md', '.git', '.gitignore', '__pycache__'] 
 	diritems = [item for item in diritems if item.lower() not in blacklist] #filter for common things we DONT want (or can't process)
 	diritems = [item for item in diritems if item not in sys.argv[1:]] #accept command line arguments to filter arbitrary additional amount of directory/file names from processing.
 	
@@ -118,7 +122,8 @@ def process_directory_tree(dir_path, base_dir = None):
 	directory_readme = ""
 	readme_path_lower = os.path.join(dir_path, 'readme.md')
 	readme_path_upper = os.path.join(dir_path, 'README.md')
-	# if there is already a readme in the directory, just use it. Possibly some wasted effort in lower directories, but human written readme > ai slop almost all the time
+	# We don't need to process all the files in the directory if there is already a (good) readme.
+	# Possibly some wasted effort in lower directories, but human written readme > ai slop almost all the time.
 	if os.path.isfile(readme_path_lower): # if there is a readme already in the file
 		with open(readme_path_lower, 'r', encoding="utf-8") as dir_file:
 			directory_readme = dir_file.read()
@@ -126,8 +131,8 @@ def process_directory_tree(dir_path, base_dir = None):
 		with open(readme_path_upper, 'r', encoding="utf-8") as dir_file:
 			directory_readme = dir_file.read()
 
-	# if there is not a readme in the directory or it is machine generated, summarize any files, make a readme, and save it.
-	if directory_readme == "" or directory_readme.startswith("THIS FILE IS MACHINE GENERATED."): 
+	# If there is not a readme in the directory OR it is machine generated, summarize everything in directory tree, make a readme, and save it.
+	if directory_readme == "" or directory_readme.startswith("THIS FILE IS MACHINE GENERATED"): 
 		file_summaries = []
 		files = [f for f in diritems if os.path.isfile(os.path.join(dir_path, f))]
 		for file in files:
