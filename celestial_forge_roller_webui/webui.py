@@ -12,7 +12,7 @@ import math
 # column 0 = ID, 1 = Name, 2 = Cost, 3 = Source, 4 = Domain, 5 = Description, 6 = notes
 
 #MY MAGIC NUMBERS!
-weighting_power = 2 # 0 - inf; weighting towards/from high point cost items. 0 = no weighting.
+weighting_power = 2 # 0 - inf; weighting from uniform toward high point cost items. 0 = uniform, >10 ~= select highest point val possible.
 
 def load_csv_to_list(file_name):
     data = []
@@ -51,29 +51,27 @@ def save_rolls():
         writer = csv.writer(f)
         writer.writerows(roll_history)
 
-def roll_power(categorylist, points, fail_toggle):
-	#
-	viable_rolls = [row for row in data_rows if row[4] in categorylist and row not in roll_history]  # filter to ensure we don't use anything already in roll_history again
-	if viable_rolls:
-		if fail_toggle:
-			#failable_rolls = [row for row in viable_rolls if row not in roll_history]  # filter to ensure we don't use anything already in roll_history again
-			chosen_row = random.choice(viable_rolls)  # Pick completely randomly from all un-used rows
+def roll_power(categorylist, points, roll_can_fail, weigh_gauranteed_rolls):
+	# filter to ensure we are in the right category and don't use anything already in roll_history again
+	unused_rows_in_categorylist = [row for row in data_rows if row[4] in categorylist and row not in roll_history]  
+	#print(categorylist)
+	if unused_rows_in_categorylist:
+		if roll_can_fail:
+			chosen_row = random.choice(unused_rows_in_categorylist)  # Pick randomly from viable rows in category
 			if int(''.join(filter(str.isdigit, chosen_row[2]))) > points:
 				roll_history.append(["N/A", "Failed roll.", "0" , "N/A", chosen_row[4], "N/A", "N/A"])
 				return "Failed roll", points, "\n".join([power_row_stringifier(roll) for roll in roll_history]), roll_history
 		else:
-			viable_rolls = [row for row in data_rows if int(''.join(filter(str.isdigit, row[2]))) <= points]
-			if weighted_toggle:
-				# Extract point costs and calculate weights
-				point_costs = [int(''.join(filter(str.isdigit, row[2]))) for row in viable_rolls]  # clean up the messy string values in row[2] to clean integers
-				total_points = sum(point_costs)
-				if total_points > 0:
-					weights = [pow((cost / total_points) + 1, weighting_power) for cost in point_costs]  # Calculate weights (higher point costs will have significantly higher weights)
-					chosen_row = random.choices(viable_rolls, weights=weights, k=1)[0]  # Choose a single weighted random item
-				else:
-					chosen_row = random.choice(viable_rolls)  # if rolling at 0, just pick at random.
+			if points > 0:
+				viable_rows = [row for row in unused_rows_in_categorylist if int(''.join(filter(str.isdigit, row[2]))) <= points]
 			else:
-				chosen_row = random.choice(viable_rolls)  # Pick randomly without weighting
+				viable_rows = unused_rows_in_categorylist
+			if not weigh_gauranteed_rolls:
+				chosen_row = random.choice(viable_rows)  # Pick randomly without weighting
+			else:
+				point_costs = [int(''.join(filter(str.isdigit, row[2]))) for row in viable_rows]  # list of integers representing point cost for viable rolls
+				weights = [pow(cost, weighting_power) for cost in point_costs]  # Calculate weights
+				chosen_row = random.choices(viable_rows, weights=weights, k=1)[0]  # Choose a single weighted random item
 		roll_history.append(chosen_row)  # Append the roll to the history
 		power_string = power_row_stringifier(chosen_row)  # stringify for display
 		updated_points = points - int(''.join(filter(str.isdigit, chosen_row[2])))  # Subtract the cost of the chosen roll from the points
@@ -120,7 +118,7 @@ with gr.Blocks() as page:
 		save_rolls_button = gr.Button("Save Current Rolls")
 	# define what the buttons actually do
 	pointsbtn.click(fn=process_word_count, inputs=[words, ratio], outputs=points)
-	roll_button.click(fn=roll_power, inputs=[domain_selector, points, fail_toggle], outputs=[roll_result, points, roll_history_box, roll_history_sheet])
+	roll_button.click(fn=roll_power, inputs=[domain_selector, points, fail_toggle, weighted_toggle], outputs=[roll_result, points, roll_history_box, roll_history_sheet])
 	undo_button.click(fn=undo_last_roll, inputs=[points], outputs=[roll_history_box, roll_history_sheet, points])
 	load_rolls_button.click(fn=load_previous_rolls, inputs=[], outputs=[roll_history_box, roll_history_sheet])
 	save_rolls_button.click(fn=save_rolls, inputs=[], outputs=[])
