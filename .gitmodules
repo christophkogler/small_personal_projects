@@ -1,3 +1,6 @@
 [submodule "easy_whisper_real_time"]
 	path = easy_whisper_real_time
 	url = https://github.com/christophkogler/easy_whisper_real_time.git
+[submodule "as_rpg"]
+	path = as_rpg
+	url = https://github.com/christophkogler/as_rpg.git
